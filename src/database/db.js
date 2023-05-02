@@ -3,7 +3,7 @@ import { enablePromise, openDatabase } from 'react-native-sqlite-storage';
 enablePromise(true)
 
 export async function getConnection() {
-    return await openDatabase({ name: 'database.imobiliariadatabase4', location: 'default' })
+    return await openDatabase({ name: 'database.imobiliariadatabase5', location: 'default' })
 }
 
 export async function createTables() {

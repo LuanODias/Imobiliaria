@@ -134,8 +134,8 @@ export default props => {
                                     {imovel.locado == 'false' && RenderizarLocadoFalse()}
                                 </ListItem.Subtitle>
                                 <ListItem.Subtitle>
-                                    {imovel.nomelocatario == null && renderizarImovelSemLocatario()}
-                                    {imovel.nomelocatario != null && renderizarImovelComLocatario(imovel)}
+                                    {imovel.nomelocatario == 'null' && renderizarImovelSemLocatario()}
+                                    {imovel.nomelocatario != 'null' && renderizarImovelComLocatario(imovel)}
                                 </ListItem.Subtitle>
                                 <ListItem.Title>
                                     <Text>R$</Text>
