@@ -1,5 +1,5 @@
 import React, { createContext, useReducer } from 'react';
-import imoveis from '../data/Imovel';
+import imoveis from '../database/db';
 
 const initialState = {
     imoveis: imoveis

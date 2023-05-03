@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { StyleSheet, Text, TextInput, View } from 'react-native';
 import { Picker } from '@react-native-picker/picker'
 import { Switch } from "@rneui/themed/dist/Switch";
@@ -15,13 +15,9 @@ export default props => {
 
     //const { state, dispatch } = useContext(ImovelContext)
 
-    const salvar = () => {
+    async function salvar(){
 
-        /*dispatch({
-            type: 'salvar',     
-            value: imovel
-        })*/
-        addImovel(imovel)
+        await addImovel(imovel)
         props.navigation.goBack()
     }
 
@@ -57,7 +53,7 @@ export default props => {
         return (
             <>
                 <Text>Nome do locatario: </Text>
-                <TextInput style={style.input} value={imovel.nomelocatario} onChange={event => setImovel({ ...imovel, valorAluguel: event.nativeEvent.text})}></TextInput>
+                <TextInput style={style.input} value={imovel.nomelocatario} onChange={event => setImovel({ ...imovel, valorAluguel: event.nativeEvent.text })}></TextInput>
             </>
         )
     }

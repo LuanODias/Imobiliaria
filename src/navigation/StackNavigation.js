@@ -5,6 +5,7 @@ import { Button } from "@rneui/themed";
 import { Icon } from "@rneui/themed/dist/Icon";
 import FormularioImovel from "../components/FormularioImovel";
 import Lista from "../components/Lista";
+import Login from "../components/paginacredenciais/PaginaLogin"
 import FormularioLocador from "../components/FormularioLocador";
 
 
@@ -14,7 +15,10 @@ const Stack = createNativeStackNavigator();
 export default props => {
 
     return(
-            <Stack.Navigator initialRouteName="ListaImoveis">
+            <Stack.Navigator initialRouteName="TelaLogin">
+                <Stack.Screen name="TelaLogin"
+                component={Login}
+                options={{title: 'Tela de login'}}/>
                 <Stack.Screen name="ListaImoveis"
                 component={Lista}
                 options={({navigation}) =>{

@@ -3,7 +3,7 @@ import React, { useContext, useState, useEffect } from 'react'
 import ImovelContext from '../context/ImovelContext'
 import { ListItem, Icon } from '@rneui/base'
 import { listarImoveis } from '../database/db'
-import FormularioLocador from './FormularioLocador'
+
 
 
 export default props => {
