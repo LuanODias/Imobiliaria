@@ -2,8 +2,9 @@ import { Alert, View, Text, ScrollView } from 'react-native'
 import React, { useContext, useState, useEffect } from 'react'
 import ImovelContext from '../context/ImovelContext'
 import { ListItem, Icon } from '@rneui/base'
-import { listarImoveis } from '../database/db'
+import { listarImoveis, deletarImovel } from '../database/db'
 import FormularioLocador from './FormularioLocador'
+import Imovel from '../data/Imovel'
 
 
 export default props => {
@@ -41,17 +42,15 @@ export default props => {
         )
     }
 
-    const remover = (imovel) => {
+    function remover(imovel) {
         Alert.alert('Removendo imóvel',
             'Deseja realmente remover este imóvel?',
             [
                 {
                     text: "Sim",
                     onPress() {
-                        dispatch({
-                            type: 'remover',
-                            value: imovel
-                        })
+                         deletarImovel(imovel)
+                         carregarLista()
                     }
                 },
                 {
@@ -145,7 +144,7 @@ export default props => {
                             </ListItem.Content>
                             {imovel.tipocontrato == 'Aluguel' && imovel.locado == 'false' && adicionarLocador(imovel.id)}
                             <Icon name='edit' onPress={() =>
-                                props.navigation.navigate("CadastroImovel", {imovel})
+                                props.navigation.navigate("CadastroImovel", imovel)
                             } />
                             <Icon name='delete' onPress={() => remover(imovel)} />
                         </ListItem>

@@ -13,7 +13,6 @@ export default () => {
       await createTables();
       await createTableLocatario();
       await listarImoveis();
-      // console.log(await listarLocatario());
     } catch (error) {
       console.error("Error initializing the database:", error);
     }

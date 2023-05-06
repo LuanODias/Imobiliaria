@@ -3,7 +3,7 @@ import { StyleSheet, Text, TextInput, View } from 'react-native';
 import { Picker } from '@react-native-picker/picker'
 import { Switch } from "@rneui/themed/dist/Switch";
 import { Button } from "@rneui/themed/dist/Button";
-import { addImovel } from "../database/db";
+import { addImovel, editarImovel } from "../database/db";
 
 export default props => {
 
@@ -13,24 +13,23 @@ export default props => {
             props.route.params : {}
     )
 
-    //const { state, dispatch } = useContext(ImovelContext)
-
-    const salvar = () => {
-
-        /*dispatch({
-            type: 'salvar',     
-            value: imovel
-        })*/
-        addImovel(imovel)
-        props.navigation.goBack()
-    }
+    const salvar = async () => {
+        if(imovel.id != null){
+            await editarImovel(imovel);
+            props.navigation.goBack();
+        }else{
+            await addImovel(imovel);
+            props.navigation.goBack();
+        }
+        
+      }
 
 
     const renderizarValorCondominio = () => {
         return (
             <>
                 <Text>Valor do condominio</Text>
-                <TextInput style={style.input} value={imovel.condominio?.toString()} onChange={valorCondominio => setImovel({ ...imovel, valorCondominio })}></TextInput>
+                <TextInput style={style.input} keyboardType="numeric" value={imovel.condominio?.toString()} onChangeText={valorCondominio => setImovel({ ...imovel, valorCondominio })}></TextInput>
             </>
         )
     }
@@ -39,7 +38,7 @@ export default props => {
         return (
             <>
                 <Text>Valor do aluguel: </Text>
-                <TextInput style={style.input} value={imovel.valoraluguel?.toString()} onChange={event => setImovel({ ...imovel, valorAluguel: event.nativeEvent.text })}></TextInput>
+                <TextInput style={style.input} keyboardType="numeric" value={imovel.valoraluguel?.toString()} onChangeText={aluguel => setImovel({...imovel, valoraluguel: aluguel})}></TextInput>
             </>
         )
     }
@@ -48,7 +47,7 @@ export default props => {
         return (
             <>
                 <Text>Valor da venda: </Text>
-                <TextInput style={style.input} value={imovel.valorvenda?.toString()} onChange={event => setImovel({ ...imovel, valorVenda: event.nativeEvent.text })}></TextInput>
+                <TextInput style={style.input} keyboardType="numeric" value={imovel.valorvenda?.toString()} onChangeText={venda => setImovel({...imovel, valorvenda: venda})} />
             </>
         )
     }
@@ -57,7 +56,7 @@ export default props => {
         return (
             <>
                 <Text>Nome do locatario: </Text>
-                <TextInput style={style.input} value={imovel.nomelocatario} onChange={event => setImovel({ ...imovel, valorAluguel: event.nativeEvent.text})}></TextInput>
+                <TextInput style={style.input} value={imovel.nomelocatario} onChange={event => setImovel({ ...imovel, nomelocatario: event.nativeEvent.text })}></TextInput>
             </>
         )
     }
@@ -91,8 +90,7 @@ export default props => {
 
             <Text>Endereço:</Text>
             <TextInput style={style.input}
-                value={imovel.endereco}
-
+                value={imovel.endereco?.toString()}
                 onChangeText={endereco => setImovel({ ...imovel, endereco })} />
 
             {imovel.tipoContrato == 'Venda' && renderizarValorVenda()}
@@ -100,13 +98,12 @@ export default props => {
 
             <Text>Quantidade de quartos:</Text>
             <TextInput style={style.input}
-                value={imovel.qtdquartos}
-                onChangeText={quartos => setImovel({ ...imovel, quartos })} />
+                keyboardType="numeric"
+                value={imovel.qtdquartos?.toString()}
+                onChangeText={quartos => setImovel({...imovel, qtdquartos: quartos})} />
 
             <Text>Quantidade de banheiros:</Text>
-            <TextInput style={style.input}
-                value={imovel.qtdbanheiros}
-                onChangeText={banheiros => setImovel({ ...imovel, banheiros })} />
+            <TextInput style={style.input} keyboardType="numeric" value={imovel.qtdbanheiros?.toString()} onChangeText={banheiro => setImovel({...imovel, qtdbanheiros: banheiro })}></TextInput>
 
             <Text>Locado:</Text>
             <Switch value={imovel.locado}

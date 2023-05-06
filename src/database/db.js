@@ -1,4 +1,5 @@
 import { enablePromise, openDatabase } from 'react-native-sqlite-storage';
+import Imovel from '../data/Imovel';
 
 enablePromise(true)
 
@@ -71,8 +72,8 @@ export async function addImovel(imovel) {
     const sql = `
     INSERT INTO imovel(tipocontrato, tipoimovel, endereco, valorvenda, valoraluguel, qtdquartos, qtdbanheiros, locado, condominio, nomelocatario)
     VALUES ("${imovel.tipoContrato}", "${imovel.tipoImovel}", "${imovel.endereco}", 
-    "${imovel.valorVenda ? imovel.valorVenda : null}", "${imovel.valorAluguel ? imovel.valorAluguel : null}", "${imovel.qtdQuartos}", 
-    "${imovel.qtdBanheiros}", "${imovel.locado ? imovel.locado : false}", "${imovel.condominio ? imovel.condominio : null}", "${imovel.nomelocatario ? imovel.nomelocatario : null}")
+    "${imovel.valorvenda ? imovel.valorvenda : null}", "${imovel.valoraluguel ? imovel.valoraluguel : null}", "${imovel.qtdquartos}", 
+    "${imovel.qtdbanheiros}", "${imovel.locado ? imovel.locado : false}", "${imovel.condominio ? imovel.condominio : null}", "${imovel.nomelocatario ? imovel.nomelocatario : null}")
     `
     await db.executeSql(sql)
         .then((response) => console.warn('Inserido: ' + JSON.stringify(response)))
@@ -83,7 +84,7 @@ export async function addImovel(imovel) {
 export async function listarImoveis() {
     const db = await getConnection()
     const sql = `
-    SELECT id, endereco, tipocontrato, tipoimovel, valoraluguel, valorvenda, locado, nomelocatario FROM imovel
+    SELECT id, endereco, tipocontrato, tipoimovel, valoraluguel, valorvenda, locado, nomelocatario, qtdquartos, qtdbanheiros FROM imovel
     `
 
     const listaRetorno = []
@@ -101,7 +102,9 @@ export async function listarImoveis() {
                     valoraluguel: item.valoraluguel,
                     valorvenda: item.valorvenda,
                     locado: item.locado,
-                    nomelocatario: item.nomelocatario
+                    nomelocatario: item.nomelocatario,
+                    qtdquartos: item.qtdquartos,
+                    qtdbanheiros: item.qtdbanheiros
                 }
                 listaRetorno.push(itemImovel)
             }
@@ -133,3 +136,26 @@ export async function atualizarLocado(locatario) {
         .catch((erro) => console.warn('Erro: ' + JSON.stringify(erro)))
     db.close()
 }
+
+export async function deletarImovel(imovel) {
+    const db = await getConnection()
+    const sql = `
+    DELETE FROM imovel WHERE id = "${imovel.id}"  
+    `
+    await db.executeSql(sql)
+        .then((response) => console.warn('Deletado: ' + JSON.stringify(response)))
+        .catch((erro) => console.warn('Erro: ' + JSON.stringify(erro)))
+    db.close()
+}
+
+
+export async function editarImovel(imovel) {
+    const db = await getConnection()
+    const sql = `UPDATE imovel SET tipocontrato = "${imovel.tipoContrato}", tipoimovel = "${imovel.tipoimovel}", endereco = "${imovel.endereco}", valorvenda = "${imovel.valorvenda ? imovel.valorvenda : null}", valoraluguel = "${imovel.valoraluguel ? imovel.valoraluguel : null}", qtdquartos = "${imovel.qtdquartos}", qtdbanheiros = "${imovel.qtdbanheiros}", locado = "${imovel.locado ? imovel.locado : false}", condominio = "${imovel.condominio ? imovel.condominio : null}", nomelocatario = "${imovel.nomelocatario ? imovel.nomelocatario : null}" WHERE id = ${imovel.id}`
+    await db.executeSql(sql)
+        .then((response) => console.warn('Atualizado: ' + JSON.stringify(response)))
+        .catch((erro) => console.warn('Erro: ' + JSON.stringify(erro)))
+    db.close()
+}
+
+
