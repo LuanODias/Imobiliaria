@@ -4,7 +4,7 @@ import Imovel from '../data/Imovel';
 enablePromise(true)
 
 export async function getConnection() {
-    return await openDatabase({ name: 'database.imobiliariadatabase5', location: 'default' })
+    return await openDatabase({ name: 'database.imobiliariadb4', location: 'default' })
 }
 
 export async function createTables() {
