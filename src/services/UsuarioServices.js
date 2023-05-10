@@ -1,11 +1,11 @@
 export async function salvarUsuario(usuario) {
     try {
         const response = await fetch(
-            'http://ec2-3-87-247-74.compute-1.amazonaws.com/usuarios/', {
+            'http://ec2-54-166-238-5.compute-1.amazonaws.com/usuarios/', {
             method: 'POST',
             headers: {
                 'Content-type': 'application/json',
-                'apikey': '08372311f6a85eefb262763d6a5166dc6cb50e86'
+                'apikey': 'ffefaeb379f5496dc8232d60ce8cf81a30453180'
             },
             body: JSON.stringify(usuario)
         })
@@ -21,16 +21,16 @@ export async function salvarUsuario(usuario) {
 export async function efetuarLogin(login) {
     try {
         const token = await fetch(
-            'http://ec2-3-87-247-74.compute-1.amazonaws.com/authenticate/token', {
+            'http://ec2-54-166-238-5.compute-1.amazonaws.com/authenticate/token', {
                 method: 'POST',
                 headers: {
                     'Content-type': 'application/json',
-                    'apikey': '08372311f6a85eefb262763d6a5166dc6cb50e86'
+                    'apikey': 'ffefaeb379f5496dc8232d60ce8cf81a30453180'
                 },
                 body: JSON.stringify(login)
             }
         )
-        console.log('Sucesso ao ralizar login')
+        console.log('Sucesso ao realizar login')
         return token.json()
     } catch (error) {
         console.log('Erro ao realizar login')
