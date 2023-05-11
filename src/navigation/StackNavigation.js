@@ -16,26 +16,7 @@ const Stack = createNativeStackNavigator();
 export default props => {
 
     return(
-            <Stack.Navigator initialRouteName="TelaLogin">
-                <Stack.Screen name="TelaLogin"
-                component={Login} options={({navigation}) =>{
-                    return{
-                        title: 'Tela de login',
-                        headerRight: () =>
-                        <Button type="clear"
-                        icon={<Icon name='person-add'
-                        size={30}
-                        color='black'
-                    />}
-                    onPress={() => navigation.navigate("CadastroUsuario")}
-                    />
-                    }
-                }}></Stack.Screen>
-                   
-                <Stack.Screen name="CadastroUsuario"
-                onPress={() => navigation.navigate("CadastroUsuario")}
-                component={Cadastro} 
-                options={{title: 'Tela de cadastro'}}/>
+            <Stack.Navigator initialRouteName="ListaImoveis">
                 <Stack.Screen name="ListaImoveis"
                 component={Lista}
                 options={({navigation}) =>{

@@ -1,39 +1,56 @@
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
-import React, { useEffect } from 'react';
+import { SafeAreaView, StyleSheet, Text, View, DeviceEventEmitter } from 'react-native';
+import React, { useEffect, useState  } from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import StackNavigation from './src/navigation/StackNavigation'
 import { createTableLocatario, createTables, listarImoveis, listarLocatario} from './src/database/db';
+import { buscarLogin, createTablesUsuario, deleteLogin } from './src/database/dbLogin';
+import StackNavigationLogin from './src/navigation/StackNavigationLogin';
 
 
 export default () => {
   
+  const [logado, setLogado] = useState(false)
+
+  DeviceEventEmitter.addListener("event.login", (data) => {
+    if (data.token) {
+        setLogado(true)
+    } else {
+        setLogado(false)
+    }
+})
     
   async function init() {
-    try {
       await createTables();
       await createTableLocatario();
-      await listarImoveis();
-    } catch (error) {
-      console.error("Error initializing the database:", error);
-    }
+      await createTablesUsuario();
+      const login = await buscarLogin()
+      if(login){
+        setLogado(true)
+      }
   }
     
 
     useEffect(() =>{
-      init()
+      init()  
     }, [])
 
-    return(
-      <SafeAreaView style={{flex: 1}}>
-        <NavigationContainer style={{flex: 1}}>
-          <StackNavigation>
 
-          </StackNavigation>
-        </NavigationContainer>
-      </SafeAreaView>
-    )
-  
-  
-  
+    if(logado){
+      return(
+      <SafeAreaView style={{flex: 1}}>
+                <NavigationContainer style={{flex: 1}}>
+                    <StackNavigation />
+                </NavigationContainer>
+            </SafeAreaView>
+            )
+    }else{
+      return(
+        <SafeAreaView style={{flex: 1}}>
+          <NavigationContainer style={{flex: 1}}>
+            <StackNavigationLogin/>
+          </NavigationContainer>
+        </SafeAreaView>
+      )
+    }
   }
 

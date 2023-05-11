@@ -18,6 +18,7 @@ const PaginaCadastro = () => {
             senha: senha
         }
         await salvarUsuario(data)
+        props.navigation.goBack();
     }
 
 

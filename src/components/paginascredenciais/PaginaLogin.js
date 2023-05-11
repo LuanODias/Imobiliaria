@@ -1,11 +1,11 @@
-import { Dimensions, StyleSheet, Text, TextInput, View, Image } from 'react-native'
+import { Dimensions, StyleSheet, Text, TextInput, View, Image, DeviceEventEmitter } from 'react-native'
 import React, { useState } from 'react'
-import { ActivityIndicator } from 'react-native-paper';
 
 
 import image from '../../assets/barracadastro.jpg';
 import { Button } from '@rneui/themed';
-import {efetuarLogin} from '../../services/UsuarioServices';
+import { efetuarLogin } from '../../services/UsuarioServices';
+import { addLogin } from '../../database/dbLogin';
 
 const heigth = Dimensions.get('screen').height;
 const width = Dimensions.get('screen').width;
@@ -15,17 +15,21 @@ export default props => {
 
     const [email, setEmail] = useState('')
     const [senha, setSenha] = useState('')
-    const [isLoading, setLoading] = useState(false)
 
-    async function logar(){
+    async function logar() {
 
         let data = {
             email: email,
             senha: senha
         }
-
         const token = await efetuarLogin(data)
         console.log(token)
+        if (token.status && token.status === 401) {
+            console.warn('Login inválido!')
+            return
+        }
+        await addLogin(token)
+        DeviceEventEmitter.emit("event.login", token)
     }
 
 
@@ -41,13 +45,8 @@ export default props => {
                 <TextInput style={styles.input} placeholder='E-mail' value={email} onChangeText={setEmail} />
                 <TextInput style={styles.input} secureTextEntry={true} placeholder='Senha' value={senha} onChangeText={setSenha} />
                 <View style={{ width: width * 0.9, borderRadius: 5, marginTop: 10, }}>
-                    {isLoading &&
-                        <ActivityIndicator />
-                    }
 
-                    {!isLoading &&
-                        < Button title="Logar" color={"#43481D"} onPress={logar} />
-                    }
+                    < Button title="Logar" color={"#43481D"} onPress={logar} />
                 </View>
 
             </View>

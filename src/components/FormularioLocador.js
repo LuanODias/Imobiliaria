@@ -12,7 +12,6 @@ const FormularioLocador = props => {
     const [dataInicioContrato, setdataInicioContrato] = useState("");
     const [dataFimContrato, setdataFimContrato] = useState("");
 
-    console.warn(props);
     const salvar = () => {
         
         const locatario = {
