@@ -4,7 +4,7 @@ import { Button } from '@rneui/themed'
 import { salvarUsuario } from '../../services/UsuarioServices'
 
 
-const PaginaCadastro = () => {
+export default props => {
 
     const [nome, setNome] = useState("")
     const [email, setEmail] = useState("")
@@ -43,7 +43,6 @@ const PaginaCadastro = () => {
     )
 }
 
-export default PaginaCadastro
 
 const styles = StyleSheet.create({
     formulario: {

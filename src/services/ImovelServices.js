@@ -1,4 +1,4 @@
-import { buscarLogin } from "../database/db"
+import { buscarLogin } from "../database/dbLogin"
 
 export async function salvarImovel(imovel) {
     try {

@@ -85,7 +85,7 @@ export async function buscarLoginPorEmail(db, email) {
 
 export async function deleteLogin() {
     const db = await getConnection()
-    const sql = `DELETE * FROM login`
+    const sql = `DELETE FROM login`
     await db.executeSql(sql)
     await db.close()
 }

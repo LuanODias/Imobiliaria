@@ -50,7 +50,7 @@ export default props => {
                     onChangeText={setEndereco} />
 
                 <Text>Tipo de imovel:</Text>
-                <TextInput placeholder="(Apartamento = 1 e Casa = 2)" value={tipoImovel} onChangeText={setTipoImovel} />
+                <TextInput style={style.input} placeholder="(Apartamento = 1 e Casa = 2)" value={tipoImovel} onChangeText={setTipoImovel} />
 
                 <Text>Valor do imovel:</Text>
                 <TextInput style={style.input} keyboardType="numeric" value={valorAluguel?.toString()} onChangeText={setValorAluguel}></TextInput>

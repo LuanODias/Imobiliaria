@@ -1,17 +1,19 @@
-import { Alert, View, Text, ScrollView } from 'react-native'
+import { Alert, View, Text, ScrollView, Image, Dimensions } from 'react-native'
 import React, { useContext, useState, useEffect } from 'react'
 import ImovelContext from '../context/ImovelContext'
 import { ListItem, Icon } from '@rneui/base'
 import FormularioLocador from './FormularioLocador'
-import Imovel from '../data/Imovel'
 import { listarImoveis } from '../services/ImovelServices'
 
 
+
+const height = Dimensions.get('screen').height;
+
 export default props => {
     //const { state, dispatch } = useContext(ImovelContext)
-    
-    
-    const[imoveis, setImoveis] = useState([])
+
+
+    const [imoveis, setImoveis] = useState([])
     const [isLoading, setIsLoading] = useState(true)
 
     async function carregarLista() {
@@ -26,22 +28,7 @@ export default props => {
         })
     }, [])
 
-    // const renderizarValorVenda = (imovel) => {
-       // return (
-           // <ListItem.Title>
-         //       {imovel.valorvenda}
-       //     </ListItem.Title>
-     //   )
-   // }
-
-  //  const renderizarValorAluguel = (imovel) => {
-    //    return (
-      //      <ListItem.Title>
-        //        {imovel.valoraluguel}
-          //  </ListItem.Title>
-       // )
-    //}
-
+   
     function remover(imovel) {
         Alert.alert('Removendo imóvel',
             'Deseja realmente remover este imóvel?',
@@ -49,8 +36,8 @@ export default props => {
                 {
                     text: "Sim",
                     onPress() {
-                         deletarImovel(imovel)
-                         carregarLista()
+                        //deletarImovel (imovel)
+                        carregarLista()
                     }
                 },
                 {
@@ -59,103 +46,84 @@ export default props => {
             ])
     }
 
-    // RenderizarLocadoTrue = () => {
-    //     return (
-    //         <ListItem.Subtitle>
-    //             <Text>Locado: </Text>
-    //             <Text>Sim</Text>
-    //         </ListItem.Subtitle>
-    //     )
-    // }
+    const renderizarTipoVenda = () => {
+        return (
+            <Text>Venda</Text>
+        )
+    }
 
-    // const adicionarLocador = (id) =>{
-    //     return(
-    //         <Icon name='person' onPress={() =>
-    //             props.navigation.navigate("CadastroLocador", {id})
-    //         } />
-    //     )
-    // }
+    const renderizarTipoAluguel = () => {
+        return (
+            <Text>Aluguel</Text>
+        )
+    }
 
-    // const renderizarImovelSemLocatario = () =>{
-    //     return(
-    //         <ListItem.Subtitle>
-    //             <Text>Locatario: </Text>
-    //             <Text>Sem Locatario</Text>
-    //         </ListItem.Subtitle>
-    //     )
-    // }
+    const renderizarTipoApartamento = () => {
+        return (
+            <Text>Apartamento</Text>
+        )
+    }
 
+    const renderizarTipoCasa = () => {
+        return (
+            <Text>Casa</Text>
+        )
+    }
 
-    // const renderizarImovelComLocatario = (imovel) =>{
-    //     return(
-    //         <ListItem.Subtitle>
-    //             <Text>Locatario: </Text>
-    //             {imovel.nomelocatario}
-    //         </ListItem.Subtitle>
-    //     )
-    // }
-
-    // RenderizarLocadoFalse = () => {
-    //     return (
-    //         <ListItem.Subtitle>
-    //             <Text>Locado: </Text>
-    //             <Text>Não</Text>
-    //         </ListItem.Subtitle>
-    //     )
-    // }
     if (isLoading) {
         return (
             <Text>Loading...</Text>
         )
     } else {
         console.warn(imoveis);
-    return (
-        <ScrollView>
-        <View>
-            {
-                imoveis.map(imovel => {
-                    return (
-                        <ListItem key={imovel.id}>
-                            <ListItem.Content>
-                                <ListItem.Title>
-                                    {imovel.endereco}
-                                </ListItem.Title>
-                                <ListItem.Subtitle>
-                                    <Text>Tipo de contrato: </Text>
-                                    {imovel.tipoContrato}
-                                </ListItem.Subtitle>
-                                <ListItem.Subtitle>
-                                    <Text>Tipo do imóvel: </Text>
-                                    {imovel.tipoImovel}
-                                </ListItem.Subtitle>
-                                <ListItem.Subtitle>
-                                    {imovel.locado == 'true' && RenderizarLocadoTrue()}
-                                    {imovel.locado == 'false' && RenderizarLocadoFalse()}
-                                </ListItem.Subtitle>
-                                {/* <ListItem.Subtitle>
+        
+        return (
+            <ScrollView>
+                <View>
+                    {
+                        
+                        imoveis.map(imovel => {
+                            return (
+                                <ListItem key={imovel.id}>
+                                    <ListItem.Content>
+                                        <Image style={{width: "100%", height: height * 0.20}} source={{uri: imovel.foto !=  "" ? imovel.foto : "https://www.brognoli.com.br/images/fotos/40570/imFt0bkMS_40570645934b3502dc.jpg"}}/>
+                                            <Text>{imovel.endereco}</Text>
+                                            <Text>Tipo de contrato: </Text>
+                                            {imovel.tipoCadastro == 1 && renderizarTipoVenda()}
+                                            {imovel.tipoCadastro == 2 && renderizarTipoAluguel()}
+                                            <Text>Tipo do imóvel: </Text>
+                                            {imovel.tipoImovel == 1 && renderizarTipoApartamento()}
+                                            {imovel.tipoImovel == 2 && renderizarTipoCasa()}
+
+                                            {/* {imovel.locado == 'true' && RenderizarLocadoTrue()} */}
+                                            {/* {imovel.locado == 'false' && RenderizarLocadoFalse()} */}
+
+                                        {/* <ListItem.Subtitle>
                                     {imovel.nomelocatario == 'null' && renderizarImovelSemLocatario()}
                                     {imovel.nomelocatario != 'null' && renderizarImovelComLocatario(imovel)}
                                 </ListItem.Subtitle> */}
-                                {/* <ListItem.Title>
+                                        {/* <ListItem.Title>
                                     <Text>R$</Text>
                                     {imovel.tipoContrato == 'Aluguel' && renderizarValorAluguel(imovel)}
                                     {imovel.tipoContrato == 'Venda' && renderizarValorVenda(imovel)}
                                 </ListItem.Title> */}
-                            </ListItem.Content>
-                            {/* {imovel.tipoContrato == 'Aluguel' && imovel.locado == 'false' && adicionarLocador(imovel.id)} */}
-                            <Icon name='edit' onPress={() =>
-                                props.navigation.navigate("CadastroImovel", imovel)
-                            } />
-                            <Icon name='delete' onPress={() => remover(imovel)} />
-                        </ListItem>
-                       
-                    )
-                })
-            }
-        </View>
-        </ScrollView>
-    )
+                                <Icon name='edit' onPress={() =>
+                                        props.navigation.navigate("CadastroImovel", imovel)
+                                    } />
+                                    <Icon name='delete' onPress={() => remover(imovel)} />
+                                    </ListItem.Content>
+                                    {/* {imovel.tipoContrato == 'Aluguel' && imovel.locado == 'false' && adicionarLocador(imovel.id)} */}
+                                    
+                                    
+                                </ListItem>
 
-        }
+                            )
+                        })
+                    }
+                </View>
+            </ScrollView>
+        )
+
+    }
 
 }

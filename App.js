@@ -23,6 +23,7 @@ export default () => {
       await createTables();
       await createTableLocatario();
       await createTablesUsuario();
+      //await deleteLogin();
       const login = await buscarLogin()
       if(login){
         setLogado(true)
