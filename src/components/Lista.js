@@ -135,7 +135,7 @@ export default props => {
                                         </View>
                                         <View style={styles.rowCenter}>
                                             <Icon name='edit' onPress={() =>
-                                                props.navigation.navigate("CadastroImovel", imovel)
+                                                props.navigation.navigate("EditarImovel", imovel)
                                             } />
                                             <Icon name='delete' onPress={() => remover(imovel)} />
                                         </View>

@@ -20,10 +20,9 @@ export default props => {
     const [foto, setFoto] = useState('');
     const [locado, setLocado] = useState(false);
     const [tipoCadastro, setTipoCadastro] = useState(1);
-
  
     const salvar = async () => {
-
+            
         const imovel = {
             endereco: endereco,
             tipoImovel: tipoImovel,
@@ -35,8 +34,7 @@ export default props => {
             locado: locado,
             tipoCadastro: tipoCadastro
         }
-
-            console.warn(imovel);
+            
             await salvarImovel(imovel);
             props.navigation.goBack();
 

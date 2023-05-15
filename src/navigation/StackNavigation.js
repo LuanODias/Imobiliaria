@@ -8,6 +8,9 @@ import Lista from "../components/Lista";
 import Login from "../components/paginascredenciais/PaginaLogin";
 import Cadastro from "../components/paginascredenciais/PaginaCadastro"
 import FormularioLocador from "../components/FormularioLocador";
+import FormularioEdicaoImovel from "../components/FormularioEdicaoImovel";
+import Configuracoes from "../components/Configuracoes";
+import AlterarSenha from "../components/AlterarSenha";
 
 
 
@@ -17,19 +20,23 @@ export default props => {
 
     return(
             <Stack.Navigator initialRouteName="ListaImoveis">
+                <Stack.Screen name="EditarImovel"
+                component={FormularioEdicaoImovel}/>
                 <Stack.Screen name="ListaImoveis"
                 component={Lista}
                 options={({navigation}) =>{
                     return{
                         title: 'Lista de Imóveis',
                         headerRight: () =>
-                        <Button type="clear"
-                        icon={<Icon name='add'
-                        size={30}
-                        color='black'
-                    />}
-                    onPress={() => navigation.navigate("CadastroImovel")}
-                    />
+                        <><Button type="clear"
+                                icon={<Icon name='add'
+                                    size={30}
+                                    color='black' />}
+                                onPress={() => navigation.navigate("CadastroImovel")} /><Button type="clear"
+                                    icon={<Icon name='settings'
+                                        size={30}
+                                        color='black' />}
+                                    onPress={() => navigation.navigate("Configuracoes")} /></>
                     }
                 }}/>
                 <Stack.Screen name="CadastroImovel" 
@@ -38,6 +45,8 @@ export default props => {
                 <Stack.Screen name="CadastroLocador"
                 component={FormularioLocador}
                 options={{title: 'Cadastro de locador'}}/>
+                <Stack.Screen name="Configuracoes" component={Configuracoes}></Stack.Screen>
+                <Stack.Screen name="AlterarSenha" component={AlterarSenha}/>
                 
             </Stack.Navigator>
         

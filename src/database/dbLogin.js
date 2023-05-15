@@ -12,7 +12,7 @@ export async function createTablesUsuario(){
     CREATE TABLE IF NOT EXISTS login (
         id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
         apikey VARCHAR(255) NOT NULL,
-       email VARCHAR(200) NOT NULL,
+        email VARCHAR(200) NOT NULL,
         token VARCHAR(255) NOT NULL,
         expiration_date DATETIME NOT NULL
         )
@@ -83,9 +83,9 @@ export async function buscarLoginPorEmail(db, email) {
 }
 
 
-export async function deleteLogin() {
+export async function deleteLogin(id) {
     const db = await getConnection()
-    const sql = `DELETE FROM login`
+    const sql = `DELETE FROM login WHERE id = ${id}`
     await db.executeSql(sql)
     await db.close()
 }
