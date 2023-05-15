@@ -1,14 +1,14 @@
 import { StyleSheet, Text, View, Button, Dimensions } from 'react-native'
 import React from 'react'
 import { buscarLogin, deleteLogin } from '../database/dbLogin'
-
+import RNRestart from 'react-native-restart';
 
 export default props => {
 
   const deletarLogin = async () =>{
     const login = await buscarLogin();
     await deleteLogin(login.id);
-    props.navigation.navigate('Login');
+    RNRestart.Restart();
   }
 
 
