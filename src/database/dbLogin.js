@@ -10,7 +10,7 @@ export async function createTablesUsuario(){
     const db = await getConnection()
     const sql = `
     CREATE TABLE IF NOT EXISTS login (
-        id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+        id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,  
         apikey VARCHAR(255) NOT NULL,
         email VARCHAR(200) NOT NULL,
         token VARCHAR(255) NOT NULL,
@@ -90,6 +90,13 @@ export async function deleteLogin(id) {
     await db.close()
 }
 
+
+export async function deletarLogin() {
+    const db = await getConnection()
+    const sql = `DELETE FROM login`
+    await db.executeSql(sql)
+    await db.close()
+}
 
 
 export async function buscarLogin() {

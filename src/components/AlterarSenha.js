@@ -3,14 +3,24 @@ import React, { useState } from 'react'
 import { TextInput } from 'react-native-paper'
 import { Button } from '@rneui/themed'
 import { buscarLogin } from '../database/dbLogin'
+import { AlterarUsuario, PegarUsuario } from '../services/UsuarioServices'
 
 export default props => {
 
     const [Senha, setSenha] = useState('')
 
     const alterarSenha = async () =>{
-        const login = await buscarLogin();
-        await a
+        const token = await buscarLogin()
+        const usuario = await PegarUsuario(token.email)
+        const senhanova = {
+            id: usuario.id,
+            nome: usuario.nome,
+            email: token.email,
+            senha: Senha,
+            
+        }
+        await AlterarUsuario(senhanova)
+        props.navigation.goBack();
       }
 
     return (

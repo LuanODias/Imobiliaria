@@ -29,14 +29,15 @@ export default props => {
                         title: 'Lista de Imóveis',
                         headerRight: () =>
                         <><Button type="clear"
-                                icon={<Icon name='add'
+                                icon={<Icon name='settings'
                                     size={30}
                                     color='black' />}
-                                onPress={() => navigation.navigate("CadastroImovel")} /><Button type="clear"
-                                    icon={<Icon name='settings'
+                                onPress={() => navigation.navigate("Configuracoes")} />
+                                    <Button type="clear"
+                                    icon={<Icon name='add'
                                         size={30}
                                         color='black' />}
-                                    onPress={() => navigation.navigate("Configuracoes")} /></>
+                                    onPress={() => navigation.navigate("CadastroImovel")} /></>               
                     }
                 }}/>
                 <Stack.Screen name="CadastroImovel" 
@@ -45,7 +46,7 @@ export default props => {
                 <Stack.Screen name="CadastroLocador"
                 component={FormularioLocador}
                 options={{title: 'Cadastro de locador'}}/>
-                <Stack.Screen name="Configuracoes" component={Configuracoes}></Stack.Screen>
+                <Stack.Screen name="Configuracoes" component={Configuracoes}/>
                 <Stack.Screen name="AlterarSenha" component={AlterarSenha}/>
                 
             </Stack.Navigator>

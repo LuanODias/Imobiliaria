@@ -90,3 +90,23 @@ export async function listarImoveis() {
     }
 }
 
+
+export async function listarImoveisFiltro(id) {
+    try {
+        const login = await buscarLogin()
+        const response = await fetch(
+            `http://ec2-54-166-238-5.compute-1.amazonaws.com/imoveis/tipo-imovel/${id}`,
+            {
+                method: 'GET',
+                headers: {
+                    'apikey': 'ffefaeb379f5496dc8232d60ce8cf81a30453180',
+                    'token': login.token
+                }
+            }
+        )
+        return response.json()
+    } catch (ex) {
+        console.log('Erro ao listar os imoveis!')
+        console.log(ex)
+    }
+}

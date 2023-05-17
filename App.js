@@ -3,7 +3,7 @@ import React, { useEffect, useState  } from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import StackNavigation from './src/navigation/StackNavigation'
 import { createTableLocatario, createTables, listarImoveis, listarLocatario} from './src/database/db';
-import { buscarLogin, createTablesUsuario, deleteLogin } from './src/database/dbLogin';
+import { buscarLogin, createTablesUsuario, deletarLogin, deleteLogin } from './src/database/dbLogin';
 import StackNavigationLogin from './src/navigation/StackNavigationLogin';
 
 
@@ -23,7 +23,8 @@ export default () => {
       await createTables();
       await createTableLocatario();
       await createTablesUsuario();
-      //await deleteLogin();
+      //Caso ocorra o problema do undefined no .map, rodar o deletarLogin()
+      //await deletarLogin();
       const login = await buscarLogin()
       if(login){
         setLogado(true)

@@ -3,7 +3,9 @@ import React, { useContext, useState, useEffect } from 'react'
 import ImovelContext from '../context/ImovelContext'
 import { ListItem, Icon } from '@rneui/base'
 import FormularioLocador from './FormularioLocador'
-import { deletarImovel, listarImoveis } from '../services/ImovelServices'
+import { deletarImovel, listarImoveis, listarImoveisFiltro } from '../services/ImovelServices'
+import { Picker } from '@react-native-picker/picker';
+import { useSafeAreaFrame } from 'react-native-safe-area-context'
 
 
 
@@ -12,19 +14,22 @@ const height = Dimensions.get('screen').height;
 export default props => {
     //const { state, dispatch } = useContext(ImovelContext)
 
-
+    const [filtro, setFiltro] = useState(1)
     const [imoveis, setImoveis] = useState([])
     const [isLoading, setIsLoading] = useState(true)
 
     async function carregarLista() {
-        const listaImovelApi = await listarImoveis()
-        setImoveis(listaImovelApi)
-        setIsLoading(false)
+
+            const listaImovelApi = await listarImoveis()
+            setImoveis(listaImovelApi)
+            setIsLoading(false)
+            console.log(filtro)
+
     }
 
     useEffect(() => {
         props.navigation.addListener('focus', () => {
-            carregarLista()
+            carregarLista(filtro)
         })
     }, [])
 
@@ -89,10 +94,24 @@ export default props => {
         )
     } else {
         return (
-            <ScrollView>
-                <View>
-                    {
 
+            <ScrollView>
+                <View style={{ borderWidth: 1 }}>
+                    <Picker
+                        selectedValue={filtro}
+                        onValueChange={(itemValue, itemIndex) =>
+                            setFiltro(itemValue)
+                        } 
+                        >
+                        <Picker.Item label="Todos" value="1"  />
+                        <Picker.Item label="Apartamento" value="2" />
+                        <Picker.Item label="Casa" value='3' />
+                    </Picker>
+                </View>
+                <View>
+
+                    {
+                        
                         imoveis.map(imovel => {
                             return (
                                 <ListItem key={imovel.id}>
